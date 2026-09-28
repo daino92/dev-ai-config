@@ -42,6 +42,20 @@ chmod +x scripts/install-macos.sh
 ./scripts/install-macos.sh
 ```
 
+## Importing existing Codex skills from macOS
+
+If you already have locally installed Codex skills under `~/.codex/skills`, run:
+
+```bash
+git checkout develop
+git pull
+git checkout -b feature/import-my-local-skills
+chmod +x scripts/import-codex-skills.sh
+./scripts/import-codex-skills.sh
+```
+
+The importer copies only skill directories that do not already exist in `shared/skills/`. Review the imported files before committing, especially for secrets, private company information, or machine-specific paths.
+
 ## Adding a skill
 
 1. Create `feature/<skill-name>` from `develop`.
