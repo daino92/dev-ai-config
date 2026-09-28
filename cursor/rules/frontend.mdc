@@ -1,0 +1,10 @@
+---
+description: Shared frontend engineering rules
+alwaysApply: true
+---
+
+Follow existing conventions before introducing new patterns.
+Prefer minimal, production-safe changes.
+Preserve accessibility, responsive behavior, loading/error handling, and performance characteristics.
+Do not introduce dependencies, broad refactors, or architectural abstractions unless they materially improve the requested change.
+Use conventional commits and GitFlow. Feature work branches from develop.
