@@ -1,0 +1,10 @@
+---
+description: TypeScript-specific engineering rules
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+Avoid any. Use unknown at untrusted boundaries and narrow safely.
+Prefer discriminated unions, exhaustive handling, precise domain types, and readable constrained generics.
+Avoid assertions unless the invariant is clear.
+Keep public APIs typed and derive duplicate types from canonical sources when possible.
