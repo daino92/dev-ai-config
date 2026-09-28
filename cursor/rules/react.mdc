@@ -1,0 +1,11 @@
+---
+description: React-specific engineering rules
+globs: "**/*.{jsx,tsx}"
+alwaysApply: false
+---
+
+Use function components and hooks.
+Do not use useEffect for derived values.
+Keep effects for synchronization with external systems and clean them up correctly.
+Prefer clear component composition, local state ownership, semantic HTML, accessible interactions, and deliberate loading/error/empty states.
+Avoid memoization unless it solves a demonstrated or structurally clear problem.
