@@ -1,6 +1,7 @@
 param(
     [string]$CursorSkillsPath = "$HOME\.cursor\skills",
-    [string]$CodexSkillsPath = "$HOME\.codex\skills"
+    [string]$CodexSkillsPath = "$HOME\.codex\skills",
+    [string]$AgentsSkillsPath = "$HOME\.agents\skills"
 )
 
 $ErrorActionPreference = "Stop"
@@ -69,6 +70,10 @@ function Install-Skills {
 }
 
 Install-Skills `
+    -ToolName "Agents" `
+    -TargetPath $AgentsSkillsPath
+
+Install-Skills `
     -ToolName "Cursor" `
     -TargetPath $CursorSkillsPath
 
@@ -81,6 +86,9 @@ Write-Host "Installation complete."
 Write-Host ""
 Write-Host "Shared source:"
 Write-Host "  $SharedSkillsPath"
+Write-Host ""
+Write-Host "Agents:"
+Write-Host "  $AgentsSkillsPath"
 Write-Host ""
 Write-Host "Cursor:"
 Write-Host "  $CursorSkillsPath"

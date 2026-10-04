@@ -7,6 +7,7 @@ SOURCE="$REPO_ROOT/shared/skills"
 CODEX_DIR="$HOME/.codex/skills"
 CURSOR_DIR="$HOME/.cursor/skills"
 CLAUDE_DIR="$HOME/.claude/skills"
+AGENTS_DIR="$HOME/.agents/skills"
 
 if [ ! -d "$SOURCE" ]; then
   echo "Shared skills directory not found:"
@@ -54,6 +55,8 @@ link_skills() {
     echo "[LINKED] $name"
   done
 }
+
+link_skills "Agents" "$AGENTS_DIR"
 
 if [ -d "$HOME/.codex" ]; then
   link_skills "Codex" "$CODEX_DIR"

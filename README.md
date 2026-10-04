@@ -41,6 +41,7 @@ Run the installer:
 The installer links the shared skills into:
 
 ```text
+%USERPROFILE%\.agents\skills
 %USERPROFILE%\.cursor\skills
 %USERPROFILE%\.codex\skills
 ```
@@ -54,6 +55,12 @@ dev-ai-config\shared\skills
 The installer does not modify Cursor-managed `%USERPROFILE%\.cursor\skills-cursor`.
 
 #### Verify the installation
+
+Check the installed shared skills:
+
+```powershell
+Get-ChildItem $HOME\.agents\skills
+```
 
 Check the installed Cursor skills:
 
@@ -108,11 +115,11 @@ chmod +x scripts/install-macos.sh
 ./scripts/install-macos.sh
 ```
 
-The macOS installer links the shared skills into the supported local AI-tool skill directories.
+The macOS installer links the shared skills into `~/.agents/skills` and the available Codex, Cursor, and Claude skill directories. Existing skill directories with the same name are left in place; the installer reports them as skipped.
 
-## Importing existing Codex skills from macOS
+## Importing existing local skills from macOS
 
-If you already have locally installed Codex skills under `~/.codex/skills`, run:
+If you add skills locally under `~/.agents/skills` or `~/.codex/skills`, run:
 
 ```bash
 git checkout develop
@@ -122,7 +129,9 @@ chmod +x scripts/import-codex-skills.sh
 ./scripts/import-codex-skills.sh
 ```
 
-The importer copies only skill directories that do not already exist in `shared/skills/`. Review the imported files before committing, especially for secrets, private company information, or machine-specific paths.
+The importer copies only skill directories that do not already exist in `shared/skills/`. It skips generated Python caches. Review the imported files before committing, especially for secrets, private company information, or machine-specific paths. Built-in Codex skills under `~/.codex/skills/.system` are not imported.
+
+The 55 locally installed skills from `~/.agents/skills` are included in `shared/skills/` with their supporting files. After cloning this repository on another PC, run the installer for that OS and restart the AI tools to load them. Some skills call platform-specific tools, so their instructions may still require software available only on a particular OS.
 
 ## Adding a skill
 

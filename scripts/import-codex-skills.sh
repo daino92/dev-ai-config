@@ -2,51 +2,41 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SOURCE="$HOME/.codex/skills"
 DEST="$REPO_ROOT/shared/skills"
-
-if [ ! -d "$SOURCE" ]; then
-  echo "No Codex skills directory found at:"
-  echo "  $SOURCE"
-  exit 1
-fi
 
 mkdir -p "$DEST"
 
-echo "Importing Codex skills..."
-echo
-echo "Source:"
-echo "  $SOURCE"
-echo
-echo "Destination:"
-echo "  $DEST"
-echo
+echo "Importing local skills into $DEST"
 
 imported=0
 skipped=0
 
-for skill in "$SOURCE"/*; do
-  [ -d "$skill" ] || continue
+for source in "$HOME/.agents/skills" "$HOME/.codex/skills"; do
+  [ -d "$source" ] || continue
+  echo "Source: $source"
+  for skill in "$source"/*; do
+    [ -d "$skill" ] || continue
 
-  name="$(basename "$skill")"
-  target="$DEST/$name"
+    name="$(basename "$skill")"
+    target="$DEST/$name"
 
-  if [ -L "$skill" ]; then
-    echo "[SKIP] $name is already a symbolic link"
-    skipped=$((skipped + 1))
-    continue
-  fi
+    if [ -L "$skill" ]; then
+      echo "[SKIP] $name is already a symbolic link"
+      skipped=$((skipped + 1))
+      continue
+    fi
 
-  if [ -e "$target" ]; then
-    echo "[SKIP] $name already exists in shared/skills"
-    skipped=$((skipped + 1))
-    continue
-  fi
+    if [ -e "$target" ]; then
+      echo "[SKIP] $name already exists in shared/skills"
+      skipped=$((skipped + 1))
+      continue
+    fi
 
-  cp -R "$skill" "$target"
+    rsync -a --exclude='__pycache__/' --exclude='*.pyc' "$skill/" "$target/"
 
-  echo "[IMPORTED] $name"
-  imported=$((imported + 1))
+    echo "[IMPORTED] $name"
+    imported=$((imported + 1))
+  done
 done
 
 echo
